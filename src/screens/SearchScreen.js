@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
@@ -14,18 +14,22 @@ const SearchScreen = () => {
   const [searchApi, results, errorMessage] = useResults();
 
   return (
-    <View>
+    //placeholder synatx, when we want return multiple elements or grouping of elements. when use view some will get cutoff. can use flex: 1 in view to solve.
+    //Best to use placeholder
+    <>
       <SearchBar
         term={term}
         onSetTerm={(newTerm) => setTerm(newTerm)}
         onTermSubmit={() => searchApi(term)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
-      <Text>We have found {results.length} results</Text>
-      <ResultList title="Cost Effective" results={filterByPrice("$")} />
-      <ResultList title="Bit Pricer" results={filterByPrice("$$")} />
-      <ResultList title="Big spender" results={filterByPrice("$$$")} />
-    </View>
+
+      <ScrollView>
+        <ResultList title="Cost Effective" results={filterByPrice("$")} />
+        <ResultList title="Bit Pricer" results={filterByPrice("$$")} />
+        <ResultList title="Big spender" results={filterByPrice("$$$")} />
+      </ScrollView>
+    </>
   );
 };
 
